@@ -10,11 +10,15 @@ import io.netty.handler.codec.string.StringEncoder;
 import java.util.Date;
 
 public class NettyClient {
+
     public static void main(String[] args) throws InterruptedException {
+
         Bootstrap bootstrap = new Bootstrap();
         NioEventLoopGroup group = new NioEventLoopGroup();
 
-        bootstrap.group(group)
+        bootstrap
+                // 1.指定线程模型
+                .group(group)
                 .channel(NioSocketChannel.class)
                 .handler(new ChannelInitializer<Channel>() {
                     @Override
