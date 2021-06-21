@@ -1,5 +1,9 @@
 package com.kt.im.server;
 
+import com.kt.im.codec.PacketDecoder;
+import com.kt.im.codec.PacketEncoder;
+import com.kt.im.server.handler.LoginRequestHandler;
+import com.kt.im.server.handler.MessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -40,7 +44,13 @@ public class NettyServer {
                 // 定义每条连接的数据读写，业务逻辑处理
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     protected void initChannel(NioSocketChannel ch) {
-                        ch.pipeline().addLast(new ServerHandler());
+                        ch.pipeline()
+                                // in
+                                .addLast(new PacketDecoder())
+                                .addLast(new LoginRequestHandler())
+                                .addLast(new MessageRequestHandler())
+                                // out
+                                .addLast(new PacketEncoder());
                     }
                 })
                 .bind(8000);

@@ -1,5 +1,9 @@
 package com.kt.im.client;
 
+import com.kt.im.client.handler.LoginResponseHandler;
+import com.kt.im.client.handler.MessageResponseHandler;
+import com.kt.im.codec.PacketDecoder;
+import com.kt.im.codec.PacketEncoder;
 import com.kt.im.protocol.command.PacketCodeC;
 import com.kt.im.protocol.request.MessageRequestPacket;
 import com.kt.im.util.LoginUtil;
@@ -37,7 +41,13 @@ public class NettyClient {
                 .handler(new ChannelInitializer<Channel>() {
                     @Override
                     protected void initChannel(Channel ch) {
-                        ch.pipeline().addLast(new ClientHandler());
+                        ch.pipeline()
+                                .addLast(new PacketDecoder())
+                                .addLast(new LoginResponseHandler())
+                                .addLast(new MessageResponseHandler())
+                                .addLast(new PacketEncoder())
+
+                        ;
                     }
                 });
 
@@ -63,7 +73,7 @@ public class NettyClient {
                     String line = sc.nextLine();
                     MessageRequestPacket packet = new MessageRequestPacket();
                     packet.setMessage(line);
-                    ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(channel.alloc(), packet);
+                    ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(channel.alloc().buffer(), packet);
                     channel.writeAndFlush(byteBuf);
                 }
             }

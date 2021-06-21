@@ -7,7 +7,6 @@ import com.kt.im.protocol.response.MessageResponsePacket;
 import com.kt.im.serialize.Serializer;
 import com.kt.im.serialize.impl.JSONSerializer;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,9 +33,7 @@ public class PacketCodeC {
     }
 
 
-    public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
-        // 1. 创建 ByteBuf 对象
-        ByteBuf byteBuf = byteBufAllocator.ioBuffer();
+    public ByteBuf encode(ByteBuf byteBuf, Packet packet) {
         // 2. 序列化 java 对象
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
 
@@ -50,7 +47,6 @@ public class PacketCodeC {
 
         return byteBuf;
     }
-
 
     public Packet decode(ByteBuf byteBuf) throws Exception {
         // 跳过 magic number
