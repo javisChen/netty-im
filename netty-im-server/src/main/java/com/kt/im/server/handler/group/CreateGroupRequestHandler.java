@@ -1,4 +1,4 @@
-package com.kt.im.server.handler;
+package com.kt.im.server.handler.group;
 
 
 import com.kt.im.protocol.request.CreateGroupRequestPacket;
@@ -6,6 +6,7 @@ import com.kt.im.protocol.response.CreateGroupResponsePacket;
 import com.kt.im.util.IDUtil;
 import com.kt.im.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -14,7 +15,10 @@ import io.netty.channel.group.DefaultChannelGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+@ChannelHandler.Sharable
 public class CreateGroupRequestHandler extends SimpleChannelInboundHandler<CreateGroupRequestPacket> {
+
+    public static CreateGroupRequestHandler INSTANCE = new CreateGroupRequestHandler();
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CreateGroupRequestPacket createGroupRequestPacket) {

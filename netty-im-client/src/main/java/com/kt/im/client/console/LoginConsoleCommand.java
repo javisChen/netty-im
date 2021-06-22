@@ -10,10 +10,13 @@ public class LoginConsoleCommand implements ConsoleCommand {
     @Override
     public void exec(Scanner scanner, Channel channel) {
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-
-        System.out.print("输入用户名登录: ");
+        System.out.println("=====================================");
+        System.out.println("================ 登录 ================");
+        System.out.print("用户名: ");
         loginRequestPacket.setUsername(scanner.nextLine());
-        loginRequestPacket.setPassword("pwd");
+        System.out.print("密码: ");
+        loginRequestPacket.setPassword(scanner.nextLine());
+        System.out.println("=====================================");
 
         // 发送登录数据包
         channel.writeAndFlush(loginRequestPacket);

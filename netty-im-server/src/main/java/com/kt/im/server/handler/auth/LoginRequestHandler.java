@@ -1,4 +1,4 @@
-package com.kt.im.server.handler;
+package com.kt.im.server.handler.auth;
 
 import com.kt.im.protocol.request.LoginRequestPacket;
 import com.kt.im.protocol.response.LoginResponsePacket;
@@ -14,6 +14,8 @@ import java.util.UUID;
 // 1. 加上注解标识，表明该 handler 是可以多个 channel 共享的
 @ChannelHandler.Sharable
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
+
+    public static LoginRequestHandler INSTANCE = new LoginRequestHandler();
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket) {

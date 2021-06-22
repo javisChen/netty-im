@@ -1,14 +1,19 @@
-package com.kt.im.server.handler;
+package com.kt.im.server.handler.single;
 
 import com.kt.im.protocol.request.MessageRequestPacket;
 import com.kt.im.protocol.response.MessageResponsePacket;
 import com.kt.im.session.Session;
 import com.kt.im.util.SessionUtil;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
+@ChannelHandler.Sharable
+public class SingleMessageRequestHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
+
+    public static SingleMessageRequestHandler INSTANCE = new SingleMessageRequestHandler();
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageRequestPacket messageRequestPacket) {
         // 1.拿到消息发送方的会话信息

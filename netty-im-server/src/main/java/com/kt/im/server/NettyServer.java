@@ -1,9 +1,13 @@
 package com.kt.im.server;
 
-import com.kt.im.codec.PacketDecoder;
-import com.kt.im.codec.PacketEncoder;
 import com.kt.im.codec.Spliter;
-import com.kt.im.server.handler.*;
+import com.kt.im.server.handler.PacketCodecHandler;
+import com.kt.im.server.handler.auth.AuthHandler;
+import com.kt.im.server.handler.auth.LoginRequestHandler;
+import com.kt.im.server.handler.group.CreateGroupRequestHandler;
+import com.kt.im.server.handler.group.JoinGroupRequestHandler;
+import com.kt.im.server.handler.group.ListGroupMembersRequestHandler;
+import com.kt.im.server.handler.single.SingleMessageRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -47,16 +51,13 @@ public class NettyServer {
                         ch.pipeline()
                                 // in
                                 .addLast(new Spliter())
-                                .addLast(new PacketDecoder())
-                                .addLast(new LoginRequestHandler())
-                                .addLast(new AuthHandler())
-                                .addLast(new MessageRequestHandler())
-                                .addLast(new CreateGroupRequestHandler())
-                                .addLast(new JoinGroupRequestHandler())
-                                .addLast(new ListGroupMembersRequestHandler())
-
-                                // out
-                                .addLast(new PacketEncoder());
+                                .addLast(PacketCodecHandler.INSTANCE)
+                                .addLast(LoginRequestHandler.INSTANCE)
+                                .addLast(AuthHandler.INSTANCE)
+                                .addLast(SingleMessageRequestHandler.INSTANCE)
+                                .addLast(CreateGroupRequestHandler.INSTANCE)
+                                .addLast(JoinGroupRequestHandler.INSTANCE)
+                                .addLast(ListGroupMembersRequestHandler.INSTANCE);
                     }
                 })
                 .bind(8000);

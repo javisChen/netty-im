@@ -1,4 +1,4 @@
-package com.kt.im.server.handler;
+package com.kt.im.server.handler.auth;
 
 import com.kt.im.util.SessionUtil;
 import io.netty.channel.ChannelHandler;
@@ -7,6 +7,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 @ChannelHandler.Sharable
 public class AuthHandler extends ChannelInboundHandlerAdapter {
+
+    public static AuthHandler INSTANCE = new AuthHandler();
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {

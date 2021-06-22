@@ -19,8 +19,8 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <netty.version>4.1.6.Final</netty.version>
-        <lombok.version>4.1.6.Final</lombok.version>
-        <lombok.version>1.2.56</lombok.version>
+        <lombok.version>1.18.20</lombok.version>
+        <fastjson.version>1.2.56</fastjson.version>
 
         <netty.im.core.version>1.0.0-SNAPSHOT</netty.im.core.version>
         <netty.im.client.version>1.0.0-SNAPSHOT</netty.im.client.version>
@@ -40,7 +40,6 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
-                <scope>provided</scope>
             </dependency>
 
             <dependency>

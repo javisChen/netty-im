@@ -1,14 +1,18 @@
-package com.kt.im.server.handler;
-
+package com.kt.im.server.handler.group;
 
 import com.kt.im.protocol.request.QuitGroupRequestPacket;
 import com.kt.im.protocol.response.QuitGroupResponsePacket;
 import com.kt.im.util.SessionUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 
+@ChannelHandler.Sharable
 public class QuitGroupRequestHandler extends SimpleChannelInboundHandler<QuitGroupRequestPacket> {
+
+    public static QuitGroupRequestHandler INSTANCE = new QuitGroupRequestHandler();
+
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, QuitGroupRequestPacket requestPacket) {
         // 1. 获取群对应的 channelGroup，然后将当前用户的 channel 移除
