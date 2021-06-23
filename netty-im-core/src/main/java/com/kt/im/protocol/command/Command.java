@@ -31,4 +31,8 @@ public interface Command {
     Byte QUIT_GROUP_RESPONSE = 14;
 
     Byte GROUP_USER_NOTIFY_RESPONSE = 15;
+
+    Byte LIST_USER_REQUEST = 16;
+
+    Byte LIST_USER_RESPONSE = 17;
 }

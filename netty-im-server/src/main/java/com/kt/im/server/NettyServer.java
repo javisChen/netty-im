@@ -8,6 +8,7 @@ import com.kt.im.server.handler.group.CreateGroupRequestHandler;
 import com.kt.im.server.handler.group.JoinGroupRequestHandler;
 import com.kt.im.server.handler.group.ListGroupMembersRequestHandler;
 import com.kt.im.server.handler.single.SingleMessageRequestHandler;
+import com.kt.im.server.handler.user.ListUserRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -57,7 +58,8 @@ public class NettyServer {
                                 .addLast(SingleMessageRequestHandler.INSTANCE)
                                 .addLast(CreateGroupRequestHandler.INSTANCE)
                                 .addLast(JoinGroupRequestHandler.INSTANCE)
-                                .addLast(ListGroupMembersRequestHandler.INSTANCE);
+                                .addLast(ListGroupMembersRequestHandler.INSTANCE)
+                                .addLast(ListUserRequestHandler.INSTANCE);
                     }
                 })
                 .bind(8000);

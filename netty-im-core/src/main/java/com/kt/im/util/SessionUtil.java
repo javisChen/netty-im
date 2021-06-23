@@ -18,6 +18,10 @@ public class SessionUtil {
         channel.attr(Attributes.SESSION).set(session);
     }
 
+    public static Map<String, Channel> getOnlineUsers() {
+        return userIdChannelMap;
+    }
+
     public static void unBindSession(Channel channel) {
         if (hasLogin(channel)) {
             Session session = getSession(channel);

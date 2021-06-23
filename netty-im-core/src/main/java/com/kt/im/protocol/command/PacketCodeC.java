@@ -33,6 +33,8 @@ public class PacketCodeC {
         packetTypeMap.put(LIST_GROUP_MEMBERS_REQUEST, ListGroupMembersRequestPacket.class);
         packetTypeMap.put(LIST_GROUP_MEMBERS_RESPONSE, ListGroupMembersResponsePacket.class);
         packetTypeMap.put(GROUP_USER_NOTIFY_RESPONSE, GroupUserNotifyResponsePacket.class);
+        packetTypeMap.put(LIST_USER_REQUEST, ListUserRequestPacket.class);
+        packetTypeMap.put(LIST_USER_RESPONSE, ListUserResponsePacket.class);
 
         serializerMap = new HashMap<>();
         Serializer serializer = new JSONSerializer();

@@ -6,6 +6,7 @@ import com.kt.im.server.handler.group.JoinGroupRequestHandler;
 import com.kt.im.server.handler.group.ListGroupMembersRequestHandler;
 import com.kt.im.server.handler.group.QuitGroupRequestHandler;
 import com.kt.im.server.handler.single.SingleMessageRequestHandler;
+import com.kt.im.server.handler.user.ListUserRequestHandler;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -30,7 +31,7 @@ public class DispatchHandler extends SimpleChannelInboundHandler<Packet> {
         handlerMap.put(QUIT_GROUP_REQUEST, QuitGroupRequestHandler.INSTANCE);
         handlerMap.put(LIST_GROUP_MEMBERS_REQUEST, ListGroupMembersRequestHandler.INSTANCE);
 //        handlerMap.put(GROUP_MESSAGE_REQUEST, GroupMessageRequestHandler.INSTANCE);
-//        handlerMap.put(LOGOUT_REQUEST, LogoutRequestHandler.INSTANCE);
+        handlerMap.put(LIST_USER_REQUEST, ListUserRequestHandler.INSTANCE);
     }
 
     @Override
