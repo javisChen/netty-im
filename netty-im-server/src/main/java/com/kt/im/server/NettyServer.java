@@ -10,6 +10,7 @@ import com.kt.im.server.handler.group.ListGroupMembersRequestHandler;
 import com.kt.im.server.handler.single.SingleMessageRequestHandler;
 import com.kt.im.server.handler.user.ListUserRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -18,7 +19,14 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.AttributeKey;
 
 public class NettyServer {
+
+    private static int port = 8000;
+
     public static void main(String[] args) {
+        if (args[0] != null) {
+            port = Integer.parseInt(args[0]);
+        }
+
         ServerBootstrap serverBootstrap = new ServerBootstrap();
 
         // 接收线程
@@ -26,6 +34,7 @@ public class NettyServer {
 
         //处理线程
         NioEventLoopGroup worker = new NioEventLoopGroup();
+
         serverBootstrap
                 .group(boss, worker)
                 // 指定io模型
@@ -38,7 +47,7 @@ public class NettyServer {
                 .handler(new ChannelInitializer<NioServerSocketChannel>() {
                     @Override
                     protected void initChannel(NioServerSocketChannel nioServerSocketChannel) throws Exception {
-                        System.out.println("服务端启动中");
+                        System.out.println("Server Starting...");
                     }
                 })
                 // childOption()可以给每条连接设置一些TCP底层相关的属性
@@ -62,6 +71,12 @@ public class NettyServer {
                                 .addLast(ListUserRequestHandler.INSTANCE);
                     }
                 })
-                .bind(8000);
+                .bind(NettyServer.port).addListener((ChannelFutureListener) channelFuture -> {
+            if (channelFuture.isSuccess()) {
+                System.out.println("Server started at " + NettyServer.port);
+            } else {
+                System.out.println("Server start fail... ");
+            }
+        });
     }
 }

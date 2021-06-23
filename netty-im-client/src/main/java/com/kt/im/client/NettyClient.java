@@ -19,7 +19,13 @@ import java.util.Scanner;
 
 public class NettyClient {
 
+    private static String inetHost = "127.0.0.1";
+    private static int inetPort = 8000;
+
     public static void main(String[] args) throws InterruptedException {
+        if (args[0] != null) {
+            inetPort = Integer.parseInt(args[0]);
+        }
 
         Bootstrap bootstrap = new Bootstrap();
         NioEventLoopGroup group = new NioEventLoopGroup();
@@ -55,15 +61,15 @@ public class NettyClient {
                     }
                 });
 
-        bootstrap.connect("127.0.0.1", 8000)
+        bootstrap.connect(inetHost, inetPort)
                 .addListener(channelFuture -> {
                     if (channelFuture.isSuccess()) {
-                        System.out.println("连接成功");
+                        System.out.println("Connection successful");
                         Channel channel = ((ChannelFuture) channelFuture).channel();
                         // 连接成功之后，启动控制台线程
                         startConsoleThread(channel);
                     } else {
-                        System.out.println("连接失败");
+                        System.out.println("Connection fail");
                     }
                 });
     }
@@ -72,7 +78,6 @@ public class NettyClient {
         ConsoleCommandManager consoleCommandManager = new ConsoleCommandManager();
         LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
         Scanner scanner = new Scanner(System.in);
-
         new Thread(() -> {
             while (!Thread.interrupted()) {
                 if (!SessionUtil.hasLogin(channel)) {
