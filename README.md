@@ -14,6 +14,9 @@
 
 ```shell
 
+# pull
+git clone https://github.com/javisChen/netty-im.git
+
 # 构建
 mvn -DskipTests=true clean package
 
